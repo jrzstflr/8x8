@@ -120,9 +120,10 @@ ${formData.callback_update}
   }
 
   return (
+    <div className="bg-gray-800 text-white py-8">
     <motion.form
       id="mainForm"
-      className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg"
+      className="max-w-2xl mx-auto p-6 bg-gray-800 text-black shadow-lg rounded-lg"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -167,7 +168,7 @@ ${formData.callback_update}
             onChange={handleChange}
             className="form-radio h-5 w-5 text-blue-600"
           />
-          <span className="ml-2">📥 Inbound</span>
+          <span className="ml-2 text-white">📥 Inbound</span>
         </label>
         <label className="inline-flex items-center">
           <input
@@ -178,7 +179,7 @@ ${formData.callback_update}
             onChange={handleChange}
             className="form-radio h-5 w-5 text-blue-600"
           />
-          <span className="ml-2">📤 Outbound</span>
+          <span className="ml-2 text-white">📤 Outbound</span>
         </label>
       </div>
 
@@ -235,7 +236,7 @@ ${formData.callback_update}
             transition={{ duration: 0.3 }}
           >
             <div className="form-section mt-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Security Passphrase Verification Needed:
               </label>
               <div className="flex space-x-4">
@@ -256,7 +257,7 @@ ${formData.callback_update}
             </div>
 
             <div className="form-section mt-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Security Passphrase Verified:</label>
+              <label className="block text-sm font-medium text-white mb-2">Security Passphrase Verified:</label>
               <div className="flex space-x-4">
                 {["Yes", "No", "NA", "Yes_otp"].map((value) => (
                   <label key={value} className="inline-flex items-center">
@@ -381,6 +382,7 @@ ${formData.callback_update}
         </motion.button>
       </div>
     </motion.form>
+    </div>
   )
 }
 

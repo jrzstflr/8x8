@@ -9,6 +9,8 @@ const Saved = ({ savedNotes, setSavedNotes }) => {
   const [selectedNotes, setSelectedNotes] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [filter, setFilter] = useState("all");
+  const [editingNote, setEditingNote] = useState(null);
+  const [editedText, setEditedText] = useState("");
 
   const handleDelete = (noteId) => {
     setSavedNotes((prev) => prev.filter((n) => n.id !== noteId));
@@ -35,19 +37,37 @@ const Saved = ({ savedNotes, setSavedNotes }) => {
     setSelectAll(!selectAll);
   };
 
+  const handleEdit = (note) => {
+    setEditingNote(note.id);
+    setEditedText(note.mcn_case_id);
+  };
+
+  const handleSaveEdit = (noteId) => {
+    setSavedNotes((prev) =>
+      prev.map((note) => (note.id === noteId ? { ...note, mcn_case_id: editedText } : note))
+    );
+    setEditingNote(null);
+  };
+
   const filteredNotes =
     filter === "all" ? savedNotes : savedNotes.filter((note) => note.direction === filter);
 
+  const buttonVariants = {
+    hover: { scale: 1.05, transition: { duration: 0.2 } },
+    tap: { scale: 0.95, transition: { duration: 0.2 } },
+  };
+
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div className="bg-gray-800 text-white py-8">
+    <div className="max-w-4xl mx-auto p-6 bg-gray-800 text-white shadow-lg rounded-lg">
       <div className="flex justify-between mb-4">
-        <Button variant={filter === "inbound" ? "default" : "outline"} onClick={() => setFilter("inbound")}>
+        <Button variant={filter === "inbound" ? "default" : "outline"} onClick={() => setFilter("inbound")} className="text-black">
           Inbound
         </Button>
-        <Button variant={filter === "outbound" ? "default" : "outline"} onClick={() => setFilter("outbound")}>
+        <Button variant={filter === "outbound" ? "default" : "outline"} onClick={() => setFilter("outbound")} className="text-black">
           Outbound
         </Button>
-        <Button variant={filter === "all" ? "default" : "outline"} onClick={() => setFilter("all")}>
+        <Button variant={filter === "all" ? "default" : "outline"} onClick={() => setFilter("all")} className="text-black">
           All
         </Button>
       </div>
@@ -80,16 +100,55 @@ const Saved = ({ savedNotes, setSavedNotes }) => {
                   />
                 </label>
                 <div className="flex-1 ml-2">
-                  <h3 className="font-medium">MCN/Case ID: {note.mcn_case_id}</h3>
+                  {editingNote === note.id ? (
+                    <input
+                      type="text"
+                      value={editedText}
+                      onChange={(e) => setEditedText(e.target.value)}
+                      className="p-2 border rounded text-black"
+                    />
+                  ) : (
+                    <h3 className="font-medium">MCN/Case ID: {note.mcn_case_id}</h3>
+                  )}
                 </div>
-                <Button variant="destructive" size="sm" onClick={() => handleDelete(note.id)}>
-                  Delete
-                </Button>
+                <div className="flex gap-2">
+                  {editingNote === note.id ? (
+                    <motion.button
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                      className="px-4 py-2 bg-green-500 text-white rounded-md"
+                      onClick={() => handleSaveEdit(note.id)}
+                    >
+                      Save
+                    </motion.button>
+                  ) : (
+                    <motion.button
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                      className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                      onClick={() => handleEdit(note)}
+                    >
+                      Edit
+                    </motion.button>
+                  )}
+                  <motion.button
+                    variants={buttonVariants}
+                    whileHover="hover"
+                    whileTap="tap"
+                    className="px-4 py-2 bg-red-500 text-white rounded-md"
+                    onClick={() => handleDelete(note.id)}
+                  >
+                    Delete
+                  </motion.button>
+                </div>
               </motion.div>
             ))}
           </div>
         )}
       </ScrollArea>
+    </div>
     </div>
   );
 };
