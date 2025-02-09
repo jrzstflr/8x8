@@ -438,16 +438,22 @@ ${formData.callback_update}
         </AnimatePresence>
 
         <div className="flex justify-center space-x-4 mt-6">
-          <motion.button
-            type="button"
-            onClick={copyAndSaveFormData}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+        <motion.button
+          onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(formattedData);
+                props.setSavedNotes(prev => [...prev, newNote]);
+                alert("Form data copied and saved successfully!");
+              } catch (err) {
+                alert("Failed to copy form data.");
+              }
+            }}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-400"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
-          >
-            Copy
-          </motion.button>
+          >Copy
+        </motion.button>
           <motion.button
             type="button"
             onClick={resetForm}

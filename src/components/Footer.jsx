@@ -1,6 +1,6 @@
 import react from "react";
 import logo8x8 from "../Logos/8x8.png";
-import logookta from "../Logos/okta.png";
+import logoOkta from "../Logos/okta.png";
 import logosf from "../Logos/SF.png";
 
 const Footer = () => {
@@ -22,7 +22,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-300">
+                <a href="https://8x8.okta.com" className="hover:text-gray-300">
                   OKTA
                 </a>
               </li>
@@ -45,13 +45,13 @@ const Footer = () => {
               <a href="https://support-portal.8x8.com" className="hover:opacity-80">
                 <img src={logo8x8} alt="8x8" className="w-10 h-10" />
               </a>
-              <a href="#" className="hover:opacity-80">
-                <img src={logookta} alt="okta" className="w-10 h-10" />
+              <a href="https://8x8.okta.com" className="hover:opacity-80">
+                <img src={logoOkta} alt="okta" className="w-10 h-10" />
               </a>
               <a href="https://8x8.okta.com/home/salesforce/0oa13xf01tOIsGNwF297/46" className="hover:opacity-80">
                 <img src={logosf} alt="SF" className="w-10 h-10" />
               </a>
-              <a href="#" className="hover:opacity-80">
+              <a href="https://ops-tools.8x8.com" className="hover:opacity-80">
                 <img src={logo8x8} alt="8x8" className="w-10 h-10" />
               </a>
             </div>
