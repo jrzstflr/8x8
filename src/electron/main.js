@@ -1,6 +1,14 @@
 const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
 
+// Add this at the start of your main.js
+if (require('electron-squirrel-startup')) {
+  app.quit();
+}
+
+// Add this to handle file associations
+app.setAsDefaultProtocolClient('note-template');
+
 const isDev = process.env.NODE_ENV === 'development';
 
 let mainWindow;
@@ -11,13 +19,13 @@ function createWindow() {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
+            contextIsolation: false,
         },
     });
 
     if (isDev) {
         mainWindow.loadURL('http://localhost:5173');
     } else {
-        // Corrected file path
         const indexPath = path.join(app.getAppPath(), 'dist', 'index.html');
         console.log("Loading file:", indexPath);
 
@@ -30,7 +38,7 @@ function createWindow() {
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         if (url.startsWith('http')) {
             shell.openExternal(url);
-            return { action: 'deny' }; // Prevent Electron from handling it
+            return { action: 'deny' };
         }
         return { action: 'allow' };
     });
@@ -44,7 +52,13 @@ function createWindow() {
     });
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+    createWindow();
+
+    app.on('activate', function () {
+        if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    });
+});
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

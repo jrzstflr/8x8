@@ -3,6 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "type": "commonjs",
+  "description": "Note Template Application",
+  "author": "jrzstflr@outlook.com",
   "scripts": {
     "start": "electron .",
     "dev": "vite",
@@ -16,6 +18,7 @@
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-scroll-area": "^1.2.3",
     "axios": "^1.7.9",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^6.3.9",
     "framer-motion": "^12.4.0",
     "lucide-react": "^0.474.0",
@@ -53,8 +56,31 @@
       "package.json"
     ],
     "win": {
-      "target": "nsis",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
       "icon": "public/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Note Template",
+      "uninstallDisplayName": "Note Template",
+      "installerIcon": "public/icon.ico",
+      "uninstallerIcon": "public/icon.ico"
+    },
+    "mac": {
+      "target": []
+    },
+    "linux": {
+      "target": []
     },
     "publish": {
       "provider": "github",
